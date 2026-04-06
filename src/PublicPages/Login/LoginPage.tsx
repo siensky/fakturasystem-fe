@@ -1,18 +1,25 @@
+import { useAuth0 } from "@auth0/auth0-react";
+
 function LoginPage() {
+  const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } =
+    useAuth0();
   return (
     <>
-    <h1>Login</h1>
-    <p>username</p>
-    <input type="text" name="" id="" />
-    <p>password</p>
-    <input type="text" name="" id="" />
+      {!isAuthenticated && (
+        <div>
+          <button onClick={() => loginWithRedirect()}>login</button>
 
-
-    <h1>Sign up</h1>
-    <p>username</p>
-    <input type="text" name="" id="" />
-    <p>password</p>
-    <input type="text" name="" id="" />
+          <button
+            onClick={() =>
+              loginWithRedirect({
+                authorizationParams: { screen_hint: "signup" },
+              })
+            }
+          >
+            Sign Up
+          </button>
+        </div>
+      )}
     </>
   );
 }
